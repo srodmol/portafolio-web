@@ -1,17 +1,12 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button'
 
 </script>
 
 <template>
-  <h1 class="text-3xl text-red-500 font-bold">
-    Página Principal
-  </h1>
- 
-  <Button>Botón de Shadcn</Button>
-
+    <section class="px-[5vw] py-16">
+        <h1 class="text-5xl font-medium tracking-tight">Inicio</h1>
+    </section>
 </template>
-
 
 <style scoped>
 

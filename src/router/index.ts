@@ -1,25 +1,32 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import InicioView from '@/views/InicioView.vue'
-import ProyectosLayout from '@/views/ProyectosLayout.vue'
-import ProyectosView from '@/views/ProyectosView.vue'
-import DetalleView from '@/views/DetalleView.vue'
-import SobreMiView from '@/views/SobreMiView.vue'
-import ContactoView from '@/views/ContactoView.vue'
+import Home from '@/pages/home/Home.vue'
+import ProyectosLayout from '@/pages/proyectos/ProyectosLayout.vue'
+import Proyectos from '@/pages/proyectos/Proyectos.vue'
+import ProyectoDetalle from '@/pages/proyectos/ProyectoDetalle.vue'
+import SobreMi from '@/pages/sobre-mi/SobreMi.vue'
+import Contacto from '@/pages/contacto/Contacto.vue'
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    titulo?: string
+  }
+}
 
 export const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', name: 'inicio', component: InicioView },
+    { path: '/', name: 'inicio', component: Home },
     {
       path: '/proyectos',
       component: ProyectosLayout,
+      meta: { titulo: 'Proyectos' },
       children: [
-        { path: '', name: 'proyectos', component: ProyectosView },
-        { path: ':slug', name: 'proyecto', component: DetalleView, props: true },
+        { path: '', name: 'proyectos', component: Proyectos },
+        { path: ':slug', name: 'proyecto', component: ProyectoDetalle, props: true },
       ],
     },
-    { path: '/sobre-mi', name: 'sobre-mi', component: SobreMiView },
-    { path: '/contacto', name: 'contacto', component: ContactoView },
+    { path: '/sobre-mi', name: 'sobre-mi', component: SobreMi, meta: { titulo: 'Sobre mí' } },
+    { path: '/contacto', name: 'contacto', component: Contacto, meta: { titulo: 'Contacto' } },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior() {
