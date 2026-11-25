@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { ArrowLeft, ArrowRight, ArrowUpRight } from '@lucide/vue'
 import { proyectos } from '@/data/proyectos'
+import GaleriaProyecto from '@/components/GaleriaProyecto.vue'
 
 // El router pasa el slug de la URL como prop (props: true en el router)
 const props = defineProps<{ slug: string }>()
@@ -35,12 +36,10 @@ const colaboradores = computed(() =>
     </div>
 
     <section class="flex flex-wrap gap-12 pt-4">
-      <!-- Imagen principal (en el commit 10 será la galería) -->
-      <div class="min-w-0 flex-[999_1_640px]">
-        <div class="aspect-[4/3] overflow-hidden bg-foreground/5">
-          <img :src="proyecto.portada.src" :alt="proyecto.portada.alt" class="size-full object-contain" />
-        </div>
-      </div>
+            <!-- Galería -->
+            <div class="min-w-0 flex-[999_1_640px]">
+                 <GaleriaProyecto :key="proyecto.slug" :imagenes="proyecto.galeria" :color="proyecto.color" />
+            </div>
 
       <!-- Información -->
       <aside class="flex flex-[1_1_340px] flex-col justify-end gap-7 px-[5vw] lg:pl-0">
