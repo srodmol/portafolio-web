@@ -18,6 +18,7 @@ export interface Perfil {
   nombre: string
   ciudad: string
   email: string
+  instagram: string
   sobreMi: BloqueTexto[]
   cv: SeccionCV[]
 }
@@ -26,6 +27,7 @@ export const perfil: Perfil = {
   nombre: 'Sara Rodríguez Molina',
   ciudad: 'Valencia, España',
   email: 'saraa.rodriguezmolina@gmail.com',
+  instagram:'saraaaa___________r',
   sobreMi: [
     {
       titulo: 'Statement',
