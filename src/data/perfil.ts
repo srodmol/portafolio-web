@@ -3,11 +3,23 @@ export interface BloqueTexto {
   parrafos: string[]
 }
 
+export interface EntradaCV {
+  etiqueta: string // la fecha, el programa o el idioma
+  texto: string
+}
+
+export interface SeccionCV {
+  id: string
+  titulo: string
+  entradas: EntradaCV[]
+}
+
 export interface Perfil {
   nombre: string
   ciudad: string
   email: string
   sobreMi: BloqueTexto[]
+  cv: SeccionCV[]
 }
 
 export const perfil: Perfil = {
@@ -27,6 +39,57 @@ export const perfil: Perfil = {
       parrafos: [
         'Sara Rodríguez Molina (Valencia, 2004) es estudiante de Bellas Artes en la Universitat Politècnica de València. Su práctica se centra en el diseño gráfico y editorial, con especial atención a la tipografía, la composición y la construcción de sistemas visuales.',
         'Su trabajo se orienta principalmente al ámbito cultural, explorando el diseño como herramienta de comunicación visual en contextos contemporáneos.',
+      ],
+    },
+  ],
+  cv: [
+    {
+      id: 'formacion',
+      titulo: 'Formación',
+      entradas: [
+        {
+          etiqueta: '2023 — actualidad',
+          texto: 'Grado en Bellas Artes, Facultad de Bellas Artes, UPV.',
+        },
+        { etiqueta: '2026', texto: 'Diseño Web y Comunicación Online — UPV.' },
+        {
+          etiqueta: '2026',
+          texto: 'Productos Digitales: Diseño de una Interfaz Gráfica — UPV.',
+        },
+      ],
+    },
+    {
+      id: 'experiencia',
+      titulo: 'Experiencia',
+      entradas: [
+        {
+          etiqueta: '2025',
+          texto: 'Digitalización, organización y preservación de material fotográfico. «Salvem les fotos UPV / Recuperar las memorias», Facultad de Bellas Artes, Valencia.',
+        },
+        {
+          etiqueta: '2025',
+          texto: '«Intersecciones», Sankofa, Valencia. Comisariado por Andrea Pont.',
+        },
+      ],
+    },
+    {
+      id: 'software',
+      titulo: 'Software',
+      entradas: [
+        {
+          etiqueta: 'Adobe',
+          texto: 'InDesign · Photoshop · Illustrator · Premiere · After Effects',
+        },
+        { etiqueta: 'Otros', texto: 'DaVinci · Figma · WordPress' },
+      ],
+    },
+    {
+      id: 'idiomas',
+      titulo: 'Idiomas',
+      entradas: [
+        { etiqueta: 'Español', texto: 'Nativo' },
+        { etiqueta: 'Valenciano', texto: 'Alto' },
+        { etiqueta: 'Inglés', texto: 'Intermedio' },
       ],
     },
   ],
