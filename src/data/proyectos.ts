@@ -5,6 +5,7 @@ export type Categoria = 'Branding' | 'Cartel' | 'Editorial' | 'UX/UI'
 export interface Imagen {
   src: string
   alt: string
+  vertical?: boolean // las verticales no salen en el rastro de la portada
 }
 
 export interface Proyecto {
@@ -97,15 +98,15 @@ export const proyectos: Proyecto[] = [
     anio: '2026',
     categoria: 'UX/UI',
     descripcion:
-      'Diseño UX/UI de app y web de planes culturales en València: descubrir actividades de arte, teatro y música, filtrarlas por hoy, gratis o cerca y guardarlas en una agenda personal.',
+      'Diseño UX/UI de app y web de planes culturales en València: descubrir actividades de arte, teatro y música, filtrarlas por hoy, gratis o cerca, y guardarlas en una agenda personal.',
     color: '#B8B3EE',
     portada: { src: '/img/a-prop/app-inicio.webp', alt: 'iPhone con la pantalla de inicio de a/prop' },
     galeria: [
       { src: '/img/a-prop/app-inicio.webp', alt: 'iPhone con la pantalla de inicio de a/prop' },
       { src: '/img/a-prop/web-inicio.webp', alt: 'Versión web de a/prop en un portátil' },
-      { src: '/img/a-prop/app-modo-oscuro.webp', alt: 'Pantalla de inicio de a/prop en modo oscuro' },
-      { src: '/img/a-prop/app-detalle.webp', alt: 'Ficha de un plan cultural en a/prop' },
-      { src: '/img/a-prop/app-agenda.webp', alt: 'Agenda semanal de a/prop en un móvil' },
+      { src: '/img/a-prop/app-modo-oscuro.webp', alt: 'Pantalla de inicio de a/prop en modo oscuro', vertical: true },
+      { src: '/img/a-prop/app-detalle.webp', alt: 'Ficha de un plan cultural en a/prop', vertical: true },
+      { src: '/img/a-prop/app-agenda.webp', alt: 'Agenda semanal de a/prop en un móvil', vertical: true },
     ],
   },
 ]

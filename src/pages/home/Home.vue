@@ -2,6 +2,7 @@
 import { ref, computed, useTemplateRef } from 'vue'
 import { proyectos } from '@/data/proyectos'
 import { useAparecerAlLlegar } from '@/composables/useAparecerAlLlegar'
+import RastroImagenes from '@/components/RastroImagenes.vue'
 
 // Escritorio: el proyecto bajo el ratón
 const slugActivo = ref('sampler')
@@ -10,13 +11,23 @@ const proyectoActivo = computed(() => proyectos.find((p) => p.slug === slugActiv
 // Móvil: las imágenes aparecen al llegar a ellas
 const imagenes = useTemplateRef<HTMLElement[]>('imagenes')
 const { vistos } = useAparecerAlLlegar(imagenes)
+
+// Escritorio: rastro de imágenes en la portada
+const rastro = useTemplateRef<InstanceType<typeof RastroImagenes>>('rastro')
+const imagenesRastro = proyectos.flatMap((p) =>
+  p.galeria.filter((imagen) => !imagen.vertical).map((imagen) => imagen.src),
+)
 </script>
 
 <template>
   <!-- Portada -->
   <section
     class="relative flex flex-wrap items-end justify-between gap-10 overflow-hidden border-b border-border px-[5vw] pt-[18vh] pb-16"
+    @mousemove="rastro?.mover($event)"
+    @mouseleave="rastro?.salir()"
   >
+    <RastroImagenes ref="rastro" :imagenes="imagenesRastro" />
+
     <h1 class="relative z-10 text-[clamp(64px,11vw,176px)] leading-[0.92] font-medium tracking-[-0.045em]">
       Sara<br />Rodríguez<br />Molina
     </h1>
