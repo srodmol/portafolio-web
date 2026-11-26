@@ -101,8 +101,7 @@ const imagenesRastro = proyectos.flatMap((p) =>
         </div>
         <figcaption class="text-[17px] leading-snug text-muted-foreground">
           <strong class="font-semibold text-foreground">“{{ proyectoActivo.titulo }}”</strong><br />
-          {{ proyectoActivo.anio }}<br />
-          {{ proyectoActivo.descripcion }}
+          {{ proyectoActivo.anio }}
         </figcaption>
       </figure>
     </div>
