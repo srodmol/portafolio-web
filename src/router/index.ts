@@ -5,6 +5,7 @@ import Proyectos from '@/pages/proyectos/Proyectos.vue'
 import ProyectoDetalle from '@/pages/proyectos/ProyectoDetalle.vue'
 import SobreMi from '@/pages/sobre-mi/SobreMi.vue'
 import Contacto from '@/pages/contacto/Contacto.vue'
+import { proyectos } from '@/data/proyectos'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -32,4 +33,18 @@ export const router = createRouter({
   scrollBehavior() {
     return { top: 0 }
   },
+})
+
+// Cambia el título de la pestaña del navegador en cada página
+router.afterEach((to) => {
+  const nombre = 'Sara Rodríguez Molina'
+
+  if (to.name === 'proyecto') {
+    const proyecto = proyectos.find((p) => p.slug === to.params.slug)
+    document.title = proyecto ? `${proyecto.titulo} — ${nombre}` : `Proyecto no encontrado — ${nombre}`
+  } else if (to.meta.titulo) {
+    document.title = `${to.meta.titulo} — ${nombre}`
+  } else {
+    document.title = `${nombre} — Portfolio`
+  }
 })
