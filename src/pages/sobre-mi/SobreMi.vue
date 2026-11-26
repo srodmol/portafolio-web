@@ -26,7 +26,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
       <div class="flex flex-wrap items-end justify-between gap-6">
         <h2 id="titulo-cv" class="text-[clamp(44px,6vw,96px)] leading-[0.95] font-medium tracking-[-0.04em]">CV</h2>
 
-        <TabsList class="h-auto flex-wrap rounded-full border border-border bg-transparent p-1">
+        <TabsList class="h-auto flex-wrap rounded-3xl border border-border bg-transparent p-1 sm:rounded-full">
           <TabsTrigger
             v-for="seccion in perfil.cv"
             :key="seccion.id"
@@ -43,7 +43,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
           <li
             v-for="(entrada, i) in seccion.entradas"
             :key="i"
-            class="grid grid-cols-[minmax(110px,200px)_minmax(0,1fr)] gap-6 border-b border-border py-5"
+            class="grid grid-cols-1 gap-1 border-b border-border py-5 sm:grid-cols-[minmax(110px,200px)_minmax(0,1fr)] sm:gap-6"
           >
             <span class="text-muted-foreground">{{ entrada.etiqueta }}</span>
             <span>{{ entrada.texto }}</span>

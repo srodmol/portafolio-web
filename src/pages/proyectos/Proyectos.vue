@@ -34,7 +34,7 @@ const resumen = computed(() => {
 
   <p aria-live="polite" class="px-[5vw] pb-6 font-mono text-sm text-muted-foreground">{{ resumen }}</p>
 
-  <section class="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-x-8 gap-y-14 px-[5vw] pb-24">
+  <section class="grid grid-cols-[repeat(auto-fill,minmax(min(100%,320px),1fr))] gap-x-8 gap-y-14 px-[5vw] pb-24">
     <TarjetaProyecto v-for="proyecto in proyectosFiltrados" :key="proyecto.slug" :proyecto="proyecto" />
   </section>
 </template>
