@@ -86,12 +86,12 @@
 }
 
 .dark {
-  --background: #111111;
-  --foreground: #F2F2F0;
-  --card: #111111;
-  --popover: #111111;
-  --muted-foreground: #A3A3A3;
-  --border: #F2F2F0;
+  --background: #1E1D1B;
+  --foreground: #EDEBE6;
+  --card: #1E1D1B;
+  --popover: #1E1D1B;
+  --muted-foreground: #A3A09A;
+  --border: #EDEBE6;
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);

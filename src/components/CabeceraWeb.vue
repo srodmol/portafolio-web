@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { Menu } from '@lucide/vue'
+import { Menu, Moon, Sun } from '@lucide/vue'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { perfil } from '@/data/perfil'
+import { useTema } from '@/composables/useTema'
 
 const route = useRoute()
+const { oscuro, alternar } = useTema()
 
 const esInicio = computed(() => route.name === 'inicio')
 const seccion = computed(() => route.meta.titulo ?? '')
@@ -18,12 +20,10 @@ const enlaces = [
 ]
 const enlacesMovil = [{ nombre: 'Inicio', ruta: '/' }, ...enlaces]
 
-// ¿Este enlace es el de la página actual?
 function esActivo(ruta: string) {
   return ruta === '/' ? route.path === '/' : route.path.startsWith(ruta)
 }
 
-// El menú se cierra solo al cambiar de página
 const menuAbierto = ref(false)
 watch(
   () => route.fullPath,
@@ -56,34 +56,49 @@ watch(
       </RouterLink>
     </nav>
 
-    <!-- Menú móvil -->
-    <Sheet v-model:open="menuAbierto">
-      <SheetTrigger as-child>
-        <Button variant="ghost" size="icon" class="ml-auto size-11 md:hidden" aria-label="Abrir menú">
-          <Menu class="size-6" aria-hidden="true" />
-        </Button>
-      </SheetTrigger>
+    <div class="ml-auto flex items-center gap-2 md:ml-0">
+      <!-- Botón de modo claro / oscuro -->
+      <Button
+        variant="outline"
+        size="icon"
+        class="size-11 rounded-full bg-transparent shadow-none"
+        :aria-label="oscuro ? 'Activar modo claro' : 'Activar modo oscuro'"
+        :aria-pressed="oscuro"
+        @click="alternar"
+      >
+        <Sun v-if="oscuro" class="size-[18px]" aria-hidden="true" />
+        <Moon v-else class="size-[18px]" aria-hidden="true" />
+      </Button>
 
-      <SheetContent side="top" class="h-dvh gap-0 border-none bg-foreground text-background">
-        <SheetTitle class="px-[5vw] pt-6 font-mono text-sm font-normal uppercase tracking-[0.04em] text-background">
-          Menú
-        </SheetTitle>
-        <SheetDescription class="sr-only">Navegación principal del portfolio</SheetDescription>
+      <!-- Menú móvil -->
+      <Sheet v-model:open="menuAbierto">
+        <SheetTrigger as-child>
+          <Button variant="ghost" size="icon" class="size-11 md:hidden" aria-label="Abrir menú">
+            <Menu class="size-6" aria-hidden="true" />
+          </Button>
+        </SheetTrigger>
 
-        <nav aria-label="Principal" class="flex flex-1 flex-col justify-center gap-1 px-[5vw]">
-          <RouterLink
-            v-for="enlace in enlacesMovil"
-            :key="enlace.ruta"
-            :to="enlace.ruta"
-            class="py-1.5 text-[clamp(40px,13vw,56px)] font-medium tracking-[-0.04em] underline-offset-8"
-            :class="{ underline: esActivo(enlace.ruta) }"
-          >
-            {{ enlace.nombre }}
-          </RouterLink>
-        </nav>
+        <SheetContent side="top" class="h-dvh gap-0 border-none bg-foreground text-background">
+          <SheetTitle class="px-[5vw] pt-6 font-mono text-sm font-normal uppercase tracking-[0.04em] text-background">
+            Menú
+          </SheetTitle>
+          <SheetDescription class="sr-only">Navegación principal del portfolio</SheetDescription>
 
-        <p class="border-t border-background/30 px-[5vw] py-5 font-mono text-sm">{{ perfil.email }}</p>
-      </SheetContent>
-    </Sheet>
+          <nav aria-label="Principal" class="flex flex-1 flex-col justify-center gap-1 px-[5vw]">
+            <RouterLink
+              v-for="enlace in enlacesMovil"
+              :key="enlace.ruta"
+              :to="enlace.ruta"
+              class="py-1.5 text-[clamp(40px,13vw,56px)] font-medium tracking-[-0.04em] underline-offset-8"
+              :class="{ underline: esActivo(enlace.ruta) }"
+            >
+              {{ enlace.nombre }}
+            </RouterLink>
+          </nav>
+
+          <p class="border-t border-background/30 px-[5vw] py-5 font-mono text-sm">{{ perfil.email }}</p>
+        </SheetContent>
+      </Sheet>
+    </div>
   </header>
 </template>
