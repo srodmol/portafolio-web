@@ -2,9 +2,7 @@
 import { ref, computed } from 'vue'
 import { proyectos } from '@/data/proyectos'
 
-// Qué proyecto se está mostrando en la vista previa
 const slugActivo = ref('sampler')
-
 const proyectoActivo = computed(() => proyectos.find((p) => p.slug === slugActivo.value))
 </script>
 
@@ -30,16 +28,16 @@ const proyectoActivo = computed(() => proyectos.find((p) => p.slug === slugActiv
   <section class="px-[5vw] pt-14 pb-24">
     <div class="mb-6 flex items-baseline justify-between gap-6 font-mono text-[15px] uppercase tracking-[0.04em]">
       <h2 class="text-[15px] font-normal">Proyectos seleccionados</h2>
-      <RouterLink to="/proyectos" class="underline-offset-4 hover:underline">Ver todos →</RouterLink>
+      <RouterLink to="/proyectos" class="flex-none underline-offset-4 hover:underline">Ver todos →</RouterLink>
     </div>
 
-    <div class="flex flex-wrap gap-12">
+    <div class="lg:grid lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-12">
       <!-- Lista -->
-      <ol class="min-w-0 flex-[999_1_560px] border-t border-border">
+      <ol class="border-t border-border">
         <li v-for="(proyecto, indice) in proyectos" :key="proyecto.slug" class="border-b border-border">
           <RouterLink
             :to="{ name: 'proyecto', params: { slug: proyecto.slug } }"
-            class="group grid grid-cols-[56px_minmax(0,1fr)_auto] items-center gap-4 py-5"
+            class="group grid grid-cols-[40px_minmax(0,1fr)] items-center gap-x-4 gap-y-3 py-5 sm:grid-cols-[56px_minmax(0,1fr)_auto]"
             @mouseenter="slugActivo = proyecto.slug"
             @focus="slugActivo = proyecto.slug"
           >
@@ -51,22 +49,27 @@ const proyectoActivo = computed(() => proyectos.find((p) => p.slug === slugActiv
               class="flex items-center gap-3.5 text-[clamp(28px,3.4vw,48px)] font-medium tracking-[-0.03em] transition-transform duration-300 group-hover:translate-x-3 group-focus-visible:translate-x-3"
             >
               <span
-                class="size-3.5 flex-none rounded-full transition-opacity duration-200"
+                class="hidden size-3.5 flex-none rounded-full transition-opacity duration-200 lg:block"
                 :class="proyecto.slug === slugActivo ? 'opacity-100' : 'opacity-0'"
                 :style="{ backgroundColor: proyecto.color }"
               />
               {{ proyecto.titulo }}
             </span>
 
-            <span class="text-right font-mono text-sm text-muted-foreground">
+            <span class="col-start-2 font-mono text-sm text-muted-foreground sm:col-start-auto sm:text-right">
               {{ proyecto.categoria }} · {{ proyecto.anio }}
             </span>
+
+            <!-- Imagen dentro de cada fila: solo en móvil y tablet -->
+            <div class="col-span-full aspect-[4/3] overflow-hidden lg:hidden" :style="{ backgroundColor: proyecto.color }">
+              <img :src="proyecto.portada.src" :alt="proyecto.portada.alt" loading="lazy" class="size-full object-cover" />
+            </div>
           </RouterLink>
         </li>
       </ol>
 
-      <!-- Vista previa -->
-      <figure v-if="proyectoActivo" class="flex flex-[1_1_380px] flex-col gap-3.5">
+      <!-- Vista previa: solo en escritorio, fija al hacer scroll -->
+      <figure v-if="proyectoActivo" class="hidden flex-col gap-3.5 lg:sticky lg:top-8 lg:flex lg:self-start">
         <div
           class="aspect-[4/3] overflow-hidden transition-colors duration-300"
           :style="{ backgroundColor: proyectoActivo.color }"
