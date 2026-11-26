@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, useTemplateRef } from 'vue'
 import { proyectos } from '@/data/proyectos'
+import { useAparecerAlLlegar } from '@/composables/useAparecerAlLlegar'
 
+// Escritorio: el proyecto bajo el ratón
 const slugActivo = ref('sampler')
 const proyectoActivo = computed(() => proyectos.find((p) => p.slug === slugActivo.value))
+
+// Móvil: las imágenes aparecen al llegar a ellas
+const imagenes = useTemplateRef<HTMLElement[]>('imagenes')
+const { vistos } = useAparecerAlLlegar(imagenes)
 </script>
 
 <template>
@@ -37,7 +43,7 @@ const proyectoActivo = computed(() => proyectos.find((p) => p.slug === slugActiv
         <li v-for="(proyecto, indice) in proyectos" :key="proyecto.slug" class="border-b border-border">
           <RouterLink
             :to="{ name: 'proyecto', params: { slug: proyecto.slug } }"
-            class="group grid grid-cols-[40px_minmax(0,1fr)] items-center gap-x-4 gap-y-3 py-5 sm:grid-cols-[56px_minmax(0,1fr)_auto]"
+            class="group grid grid-cols-[40px_minmax(0,1fr)] items-center gap-x-4 gap-y-1 py-5 sm:grid-cols-[56px_minmax(0,1fr)_auto]"
             @mouseenter="slugActivo = proyecto.slug"
             @focus="slugActivo = proyecto.slug"
           >
@@ -60,8 +66,14 @@ const proyectoActivo = computed(() => proyectos.find((p) => p.slug === slugActiv
               {{ proyecto.categoria }} · {{ proyecto.anio }}
             </span>
 
-            <!-- Imagen dentro de cada fila: solo en móvil y tablet -->
-            <div class="col-span-full aspect-[4/3] overflow-hidden lg:hidden" :style="{ backgroundColor: proyecto.color }">
+            <!-- Imagen: solo en móvil y tablet, aparece al llegar a ella -->
+            <div
+              ref="imagenes"
+              :data-id="proyecto.slug"
+              class="col-span-full mt-3 aspect-[4/3] overflow-hidden transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none lg:hidden"
+              :class="vistos.has(proyecto.slug) ? 'translate-y-0 scale-100 opacity-100' : 'translate-y-7 scale-[0.96] opacity-0'"
+              :style="{ backgroundColor: proyecto.color }"
+            >
               <img :src="proyecto.portada.src" :alt="proyecto.portada.alt" loading="lazy" class="size-full object-cover" />
             </div>
           </RouterLink>
